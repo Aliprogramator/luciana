@@ -1,0 +1,198 @@
+Ali<3
+ali34975
+No molestar
+
+Aquí empieza el canal privado #𝒞ó𝒹𝒾𝑔𝑜𝓈. 
+Ali<3 — 07/06/2025 22:13
+Tipo de archivo adjunto: archive
+MatrixLovezip.zip
+44.96 KB
+Imagen
+Ali<3
+ ha fijado un mensaje en este canal. Ver todos los mensajes fijados. — 07/06/2025 22:15
+Ali<3 — 07/06/2025 22:43
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Matrix Love</title>
+Expandir
+index.html
+3 KB
+Ali<3 — 07/06/2025 22:44
+Imagen
+﻿
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Matrix Love</title>
+  <style>* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
+  background: black;
+}
+
+canvas {
+  display: block;
+}
+
+.controls {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(0,0,0,0.5);
+  padding: 10px;
+  border-radius: 8px;
+  z-index: 10;
+}
+
+.controls label {
+  display: block;
+  margin-bottom: 5px;
+  color: white;
+}
+
+
+</style>
+</head>
+<body>
+  <div class="controls">
+    <label>Velocidad: <input type="range" min="1" max="30" value="10" id="speedControl"></label>
+    <label>Color: <input type="color" id="colorPicker" value="#ff69b4"></label>
+    <label>Texto: <input type="text" id="textInput" value="luciana"></label>
+    <button id="playButton" style="margin-top: 10px; padding: 5px 10px; background: #ff69b4; color: white; border: none; border-radius: 4px;">▶ Reproducir Música</button>
+  </div>
+  <canvas id="matrixCanvas"></canvas>
+  <audio id="backgroundMusic" loop>
+    <source src="lucianasong.mp3" type="audio/mpeg">
+    Tu navegador no soporta el elemento de audio.
+  </audio>
+  <script>
+  // Configurar música de fondo
+  const bgMusic = document.getElementById('backgroundMusic');
+  bgMusic.volume = 0.2; // Volumen bajo (20%)
+  
+  // Botón de reproducción con animación
+  document.getElementById('playButton').addEventListener('click', function() {
+    const button = this;
+    
+    // Animación del botón
+    button.style.transform = 'scale(0.9)';
+    button.style.transition = 'transform 0.2s';
+    
+    // Reproducir música
+    bgMusic.play().then(function() {
+      // Cambiar texto del botón cuando empiece a reproducir
+      button.innerHTML = '♪ Reproduciendo...';
+      button.style.background = '#00ff00';
+      
+      // Restaurar tamaño del botón
+      setTimeout(() => {
+        button.style.transform = 'scale(1)';
+      }, 200);
+      
+    }).catch(function(error) {
+      console.log('Error al reproducir:', error);
+      button.innerHTML = '❌ Error';
+      button.style.background = '#ff0000';
+      
+      setTimeout(() => {
+        button.innerHTML = '▶ Reproducir Música';
+        button.style.background = '#ff69b4';
+        button.style.transform = 'scale(1)';
+      }, 1000);
+    });
+  });
+  
+  const canvas = document.getElementById("matrixCanvas");
+const ctx = canvas.getContext("2d");
+let speed = 10;
+let message = "luciana";
+let color = "#ff69b4";
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let fontSize = 14;
+let columns = canvas.width / fontSize;
+let drops = Array.from({ length: columns }).fill(1);
+
+// CONTROLES
+document.getElementById("speedControl").addEventListener("input", (e) => {
+  speed = parseInt(e.target.value);
+});
+
+document.getElementById("colorPicker").addEventListener("input", (e) => {
+  color = e.target.value;
+});
+
+document.getElementById("textInput").addEventListener("input", (e) => {
+  message = e.target.value;
+});
+
+// EXPLOSIONES AL CLIC
+canvas.addEventListener("click", (e) => {
+  const x = e.clientX;
+  const y = e.clientY;
+  explosion(x, y);
+});
+
+function explosion(x, y) {
+  const parts = 20;
+  for (let i = 0; i < parts; i++) {
+    const angle = (Math.PI * 2 * i) / parts;
+    const dx = Math.cos(angle) * 5;
+    const dy = Math.sin(angle) * 5;
+    animateExplosion(x, y, dx, dy);
+  }
+}
+
+function animateExplosion(x, y, dx, dy) {
+  let life = 30;
+  function frame() {
+    if (life <= 0) return;
+    ctx.fillStyle = color;
+    ctx.font = "bold 16px Arial";
+    ctx.fillText("Te Amo", x + dx * (30 - life), y + dy * (30 - life));
+    life--;
+    requestAnimationFrame(frame);
+  }
+  frame();
+}
+
+function draw() {
+  ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = color;
+  ctx.font = `${fontSize}px Arial`;
+
+  for (let i = 0; i < drops.length; i++) {
+    const text = message;
+    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+    if (drops[i] * fontSize > canvas.height || Math.random() > 0.95) {
+      drops[i] = 0;
+    }
+    drops[i]++;
+  }
+}
+
+function animate() {
+  setTimeout(() => {
+    requestAnimationFrame(animate);
+    draw();
+  }, 1000 / speed);
+}
+
+animate();
+</script>
+</body>
+</html>
